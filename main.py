@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from networkx.generators.random_graphs import erdos_renyi_graph
 import numpy as np
 import scipy
-import argparse
+import sys
 
 
 class Node():
@@ -40,12 +40,7 @@ class Node():
         return self.fixed
 
 
-parser = argparse.ArgumentParser()
-parser.add_argument("-f", "--file", help="increase output verbosity")
-parser.add_argument("-r", "--random", help="increase output verbosity")
-args = parser.parse_args()
-
-
+args = sys.argv
 
 node_amount = 20
 
@@ -65,6 +60,7 @@ delta = np.max(max_edge)+1
 
 colors = [e+1 for e in range(delta)]
 
+# Initialize each node and assign its neighbour
 nodes = [Node(colors) for _ in range(node_amount)]
 
 for e in gg.edges:
@@ -74,7 +70,8 @@ for e in gg.edges:
 iteration = 0
 
 while(True):
-    missing = [e for e in nodes if not e.is_fixed()]
+    # Assigning each uncolored vertex a color
+    # missing = [e for e in nodes if not e.is_fixed()]
     terminate = True
     for node in nodes:
         if node.get_color() == 0:
@@ -82,8 +79,10 @@ while(True):
             node.generate_new_color()
         if node.get_color() == 0:
             print("WTF")
+    # Terminate if no changes where made in any node
     if terminate:
         break
+    # Sending the messages to other nodes
     for node in nodes:
         new_color = True
         for neighbour in node.neighbours:
@@ -96,9 +95,10 @@ while(True):
         if new_color and node.get_color() != 0:
             node.set_fixed()
     iteration += 1
-    print(f"Iteration: {iteration}\n", end='\r')
+    print(f"Iteration: {iteration}", end='\r')
 
 print(f"Finish in {iteration} iterations")
 
+# Verify data by looking at all edges and check if they have different values
 for edge in gg.edges:
     assert nodes[edge[0]].get_color() != nodes[edge[1]].get_color()
