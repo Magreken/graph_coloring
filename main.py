@@ -102,3 +102,7 @@ print(f"Finish in {iteration} iterations")
 # Verify data by looking at all edges and check if they have different values
 for edge in gg.edges:
     assert nodes[edge[0]].get_color() != nodes[edge[1]].get_color()
+
+# Printing coloring as integers
+for index in range(len(nodes)):
+    print(f"Color of node {index}: {nodes[index].get_color()}\n")
