@@ -3,7 +3,6 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from networkx.generators.random_graphs import erdos_renyi_graph
 import numpy as np
-import scipy
 import sys
 
 
@@ -40,13 +39,11 @@ class Node():
         return self.fixed
 
 
-args = sys.argv
-
-node_amount = 20
+node_amount = 10
 
 max_edge = [0 for _ in range(node_amount)]
 
-gg = erdos_renyi_graph(node_amount, 0.25)
+gg = erdos_renyi_graph(node_amount, 0.35)
 
 plt.figure(dpi=300)
 nx.draw_networkx(gg, node_size=100, font_size=9)
@@ -105,4 +102,4 @@ for edge in gg.edges:
 
 # Printing coloring as integers
 for index in range(len(nodes)):
-    print(f"Color of node {index}: {nodes[index].get_color()}\n")
+    print(f"Color of node {index}: {nodes[index].get_color()}")
