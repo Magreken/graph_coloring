@@ -3,7 +3,6 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from networkx.generators.random_graphs import erdos_renyi_graph
 import numpy as np
-import sys
 
 
 class Node():
